@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class TransactionController extends Controller
 {
@@ -51,10 +52,24 @@ class TransactionController extends Controller
         ]);
 
         // Return response with message and total_price
-        return response()->json([
-            'message' => 'Transaksi berhasil dilakukan!',
-            'total_price' => $totalPrice // Include total_price in the response
-        ], 201);
+        return response()->json(
+            [
+                'message' => 'Transaksi berhasil dilakukan!',
+                'total_price' => $totalPrice, // Include total_price in the response
+            ],
+            201,
+        );
+
     }
+    public function index()
+{
+    // Fetch all transactions, including the related user and barang
+    $transactions = Transaksi::with(['barang', 'user'])
+        // ->where('user_id', auth()->id())// Include user relationship
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return Inertia::render('Admin/Transaction', ['transactions' => $transactions]);
+}
 
 }

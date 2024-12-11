@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     // Rute untuk transaksi
     Route::post('/transaksi', [TransactionController::class, 'store']);
@@ -41,6 +41,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/barang', [AdminController::class, 'store'])->name('admin.barang.store');
     Route::put('/admin/barang/{id}', [AdminController::class, 'update'])->name('admin.barang.update');
     Route::delete('/admin/barang/{id}', [AdminController::class, 'destroy'])->name('admin.barang.destroy');
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 });
 
 require __DIR__ . '/auth.php';

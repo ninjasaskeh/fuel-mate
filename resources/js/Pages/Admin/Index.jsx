@@ -60,7 +60,7 @@ export default function Index({ barangs }) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Daftar Barang
+                    Admin
                 </h2>
             }
         >

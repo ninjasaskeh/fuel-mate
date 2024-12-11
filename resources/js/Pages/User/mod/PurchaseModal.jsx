@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "@/Components/Modal"; // Ensure you have the Modal component
 import axios from "axios";
 import { toast } from "react-toastify";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 const PurchaseModal = ({ show, onClose, barang }) => {
     const [quantity, setQuantity] = useState(1); // Initialize quantity state
@@ -29,7 +31,6 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                 setTotalPrice(response.data.total_price); // Set total price for confirmation modal
                 setShowConfirmation(true); // Show confirmation modal
                 console.log("Confirmation modal should now show."); // Debug log
-                // Do NOT call onClose() here to keep the purchase modal open
             } else {
                 toast.error("Total harga tidak ditemukan dalam respons.");
             }
@@ -75,7 +76,7 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                     <img
                         src={barang.image_url}
                         alt={barang.name}
-                        className="object-cover w-full h-32 mt-4 rounded-md"
+                        className="w-full mt-4 rounded-md object-fit"
                     />
                     <p className="mt-2">Harga per item: Rp {barang.price}</p>
                     <div className="flex items-center mt-4">
@@ -88,7 +89,7 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                         <span className="mx-4 text-lg">{quantity}</span>
                         <button
                             onClick={increaseQuantity}
-                            className="px-2 py-1 text-white bg-green-500 rounded"
+                            className="font-black text-white bg-green-500 rounded-full size-8"
                         >
                             +
                         </button>
@@ -97,18 +98,12 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                         Total Harga: Rp {totalPrice}
                     </p>
                     <div className="flex justify-end mt-4">
-                        <button
-                            onClick={handlePurchase}
-                            className="px-4 py-2 text-white bg-blue-500 rounded"
-                        >
+                        <PrimaryButton onClick={handlePurchase}>
                             Bayar
-                        </button>
-                        <button
-                            onClick={onClose}
-                            className="px-4 py-2 ml-2 text-gray-700 bg-gray-300 rounded"
-                        >
+                        </PrimaryButton>
+                        <SecondaryButton onClick={onClose} className="ml-2">
                             Batal
-                        </button>
+                        </SecondaryButton>
                     </div>
                 </div>
             </Modal>
@@ -119,21 +114,33 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                     show={showConfirmation}
                     onClose={handleConfirmationClose}
                 >
-                    <div className="p-6">
-                        <h2 className="text-lg font-semibold text-gray-800">
-                            Pembelian Berhasil!
-                        </h2>
-                        <p className="mt-2">
-                            Anda telah membeli {quantity} {barang.name}.
-                        </p>
-                        <p className="mt-2">Total Harga: Rp {totalPrice}</p>
-                        <div className="flex justify-end mt-4">
-                            <button
-                                onClick={handleConfirmationClose}
-                                className="px-4 py-2 text-white bg-blue-500 rounded"
+                    <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+                        <div className="flex flex-col items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="green"
+                                className="size-12"
                             >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+
+                            <h2 className="text-lg font-semibold text-gray-800">
+                                Pembelian Berhasil!
+                            </h2>
+                            <p className="mt-2">
+                                Anda telah membeli {quantity} {barang.name}.
+                            </p>
+                            <p className="mt-2">Total Harga: Rp {totalPrice}</p>
+                        </div>
+                        <div className="flex justify-end mt-4">
+                            <PrimaryButton onClick={handleConfirmationClose}>
                                 Tutup
-                            </button>
+                            </PrimaryButton>
                         </div>
                     </div>
                 </Modal>
