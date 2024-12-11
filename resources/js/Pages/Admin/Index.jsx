@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import UploadData from "./mod/UploadData"; // Pastikan path ini benar
 import DeleteData from "./mod/DeleteData"; // Pastikan path ini benar
 import axios from "axios";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function Index({ barangs }) {
     const [barangList, setBarangList] = useState(barangs); // State untuk menyimpan daftar barang
@@ -106,9 +107,9 @@ export default function Index({ barangs }) {
                                                 {barang.name}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                {barang.price}
+                                                {formatCurrency(barang.price)}
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap long-text">
                                                 {barang.description}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">

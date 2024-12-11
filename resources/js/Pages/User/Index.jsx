@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import PurchaseModal from "./mod/PurchaseModal"; // Modal untuk beli barang
 import PrimaryButton from "@/Components/PrimaryButton";
+import { formatCurrency } from "@/utils/formatCurrency"; // Import the utility function
 
 export default function Index({ barangs }) {
     const [barangList, setBarangList] = useState(barangs); // State untuk menyimpan daftar barang
@@ -42,7 +43,6 @@ export default function Index({ barangs }) {
                                     >
                                         <div className="relative">
                                             <img
-                                                className="h-[300px]"
                                                 src={barang.image_url}
                                                 alt={barang.name}
                                             />
@@ -59,7 +59,10 @@ export default function Index({ barangs }) {
                                             </p>
                                             <div className="flex items-center justify-between">
                                                 <span className="text-lg font-bold">
-                                                    Rp {barang.price}
+                                                    {formatCurrency(
+                                                        barang.price
+                                                    )}{" "}
+                                                    {/* Use the utility function here */}
                                                 </span>
                                                 <PrimaryButton
                                                     onClick={() =>

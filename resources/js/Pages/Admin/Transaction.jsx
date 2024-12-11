@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { ToastContainer } from "react-toastify";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function TransactionHistory({ transactions }) {
     // Log the transactions to see what is being passed
@@ -96,10 +97,9 @@ export default function TransactionHistory({ transactions }) {
                                                             }
                                                         </td>
                                                         <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                            Rp{" "}
-                                                            {
+                                                            {formatCurrency(
                                                                 transaction.total_price
-                                                            }
+                                                            )}
                                                         </td>
                                                         <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                             {transaction.user

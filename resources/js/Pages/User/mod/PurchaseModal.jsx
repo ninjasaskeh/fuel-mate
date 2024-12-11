@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const PurchaseModal = ({ show, onClose, barang }) => {
     const [quantity, setQuantity] = useState(1); // Initialize quantity state
@@ -73,30 +74,35 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                     <h2 className="text-lg font-semibold text-gray-800">
                         Beli {barang.name}
                     </h2>
-                    <img
-                        src={barang.image_url}
-                        alt={barang.name}
-                        className="w-full mt-4 rounded-md object-fit"
-                    />
-                    <p className="mt-2">Harga per item: Rp {barang.price}</p>
-                    <div className="flex items-center mt-4">
-                        <button
-                            onClick={decreaseQuantity}
-                            className="px-2 py-1 text-white bg-red-500 rounded"
-                        >
-                            -
-                        </button>
-                        <span className="mx-4 text-lg">{quantity}</span>
-                        <button
-                            onClick={increaseQuantity}
-                            className="font-black text-white bg-green-500 rounded-full size-8"
-                        >
-                            +
-                        </button>
+                    <hr className="my-4 border border-gray-800" />
+                    <div className=" justify-items-center">
+                        <img
+                            src={barang.image_url}
+                            alt={barang.name}
+                            className="object-contain"
+                        />
+                        <p className="mt-2">
+                            Harga per liter: {formatCurrency(barang.price)}
+                        </p>
+                        <div className="flex mt-4">
+                            <button
+                                onClick={decreaseQuantity}
+                                className="px-2 py-1 text-white bg-gray-800 rounded-full size-8"
+                            >
+                                -
+                            </button>
+                            <span className="mx-4 text-lg">{quantity}</span>
+                            <button
+                                onClick={increaseQuantity}
+                                className="font-black text-white bg-gray-800 rounded-full size-8"
+                            >
+                                +
+                            </button>
+                        </div>
+                        <p className="mt-4 text-lg font-bold">
+                            Total Harga: {formatCurrency(totalPrice)}
+                        </p>
                     </div>
-                    <p className="mt-4 text-lg font-bold">
-                        Total Harga: Rp {totalPrice}
-                    </p>
                     <div className="flex justify-end mt-4">
                         <PrimaryButton onClick={handlePurchase}>
                             Bayar
@@ -132,10 +138,15 @@ const PurchaseModal = ({ show, onClose, barang }) => {
                             <h2 className="text-lg font-semibold text-gray-800">
                                 Pembelian Berhasil!
                             </h2>
+                            <hr className="w-full my-4 border border-gray-800" />
+
                             <p className="mt-2">
-                                Anda telah membeli {quantity} {barang.name}.
+                                Anda telah membeli {quantity} liter{" "}
+                                {barang.name}.
                             </p>
-                            <p className="mt-2">Total Harga: Rp {totalPrice}</p>
+                            <p className="mt-2">
+                                Total Harga: {formatCurrency(totalPrice)}
+                            </p>
                         </div>
                         <div className="flex justify-end mt-4">
                             <PrimaryButton onClick={handleConfirmationClose}>

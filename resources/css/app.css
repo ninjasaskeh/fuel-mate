@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.long-text {
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) */
+    max-width: 150px; /* Set a maximum width */
+    white-space: normal; /* Allow text to wrap */
+}

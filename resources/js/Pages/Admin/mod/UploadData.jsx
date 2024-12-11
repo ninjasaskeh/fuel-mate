@@ -4,6 +4,16 @@ import PrimaryButton from "@/Components/PrimaryButton"; // Pastikan Anda memilik
 import axios from "axios";
 import { toast } from "react-toastify";
 
+// Utility function to format number to IDR
+const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
+};
+
 export default function UploadData({
     show,
     onClose,
@@ -23,10 +33,21 @@ export default function UploadData({
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+
+        // Handle price input separately to format it
+        if (name === "price") {
+            // Remove non-numeric characters and set the value as a number
+            const numericValue = value.replace(/[^0-9]/g, "");
+            setFormData({
+                ...formData,
+                [name]: numericValue ? parseInt(numericValue, 10) : "",
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -97,9 +118,13 @@ export default function UploadData({
                             Harga
                         </label>
                         <input
-                            type="number"
+                            type="text" // Change to text to allow formatting
                             name="price"
-                            value={formData.price || ""}
+                            value={
+                                formData.price
+                                    ? formatCurrency(formData.price)
+                                    : ""
+                            }
                             onChange={handleInputChange}
                             required
                             className="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -148,7 +173,7 @@ export default function UploadData({
 
                     <PrimaryButton
                         type="submit"
-                        className="w-full"
+                        className="w-ful"
                         isLoading={isLoading}
                     >
                         {isEditing ? "Update" : "Simpan"}
